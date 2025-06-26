@@ -1,7 +1,7 @@
 {
   "name": "@helioviewer/event-tree",
-  "version": "1.0.0",
-  "description": "A react component for grouping and listing solar events.",
+  "version": "0.0.1",
+  "description": "A react component for grouping and listing and selecting solar events.",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,14 +11,14 @@
     "url": "git+https://github.com/Helioviewer-Project/event-tree.git"
   },
   "keywords": [
-    "react",
+    "NASA",
     "HEK",
     "CCMC",
     "solar",
     "astro",
     "events",
-    "helioviewer",
-    "NASA"
+    "helioviewer.org",
+    "react"
   ],
   "author": "Kasim Necdet Percinel <kasim.n.percinel@nasa.gov>",
   "license": "Apache-2.0",
