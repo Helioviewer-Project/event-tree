@@ -87,14 +87,14 @@ function AdvancedExample() {
 | `onEventsUpdate` | `function` | ✓ | - | Callback when selected events change `(events) => void` |
 | `onHoveredEventsUpdate` | `function` | ✓ | - | Callback when hovered events change `(eventIds) => void` |
 | `onSelectionsUpdate` | `function` | ✗ | `null` | Callback when selections change `(selections, events) => void` |
-| `visibility` | `boolean` | ✗ | `true` | Whether the tree is visible |
-| `labelVisibility` | `boolean` | ✗ | `true` | Whether labels are visible |
-| `onToggleVisibility` | `function` | ✗ | `null` | Callback for visibility toggle |
-| `onToggleLabelVisibility` | `function` | ✗ | `null` | Callback for label visibility toggle |
-| `forcedSelections` | `array` | ✗ | `null` | Array of selection IDs to force |
+| `visibility` | `boolean` | ✗ | `true` | Initial value to control events visibility |
+| `labelVisibility` | `boolean` | ✗ | `true` | Initial value to control events label visibility |
+| `onToggleVisibility` | `function` | ✗ | `null` | Callback to handle visibility changes for selected events |
+| `onToggleLabelVisibility` | `function` | ✗ | `null` | Callback to handle label visibility changes for selected events |
+| `forcedSelections` | `array` | ✗ | `null` | Initial selections |
 | `apiURL` | `string` | ✗ | `"https://api.helioviewer.org"` | Helioviewer API base URL |
-| `onLoad` | `function` | ✗ | `null` | Callback when component loads |
-| `onError` | `function` | ✗ | `console.error` | Error handler `(error) => void` |
+| `onLoad` | `function` | ✗ | `null` | Callback executed when the component loads |
+| `onError` | `function` | ✗ | `console.error` | Callback to handle if any errors occurred, `(error) => void` |
 
 ## Event Data Structure
 
@@ -108,6 +108,7 @@ Selected events returned by `onEventsUpdate` have the following structure:
     label: "Event Label",
     short_label: "Short Label",
     // ... other event properties
+    // Please see https://api.helioviewer.org/docs/v2/api/api_groups/solar_features_and_events.html for more information 
   },
   label: "Display Label",
   id: "tree_node_id"
