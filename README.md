@@ -14,7 +14,7 @@ npm install @helioviewer/event-tree
 
 ```jsx
 import React, { useState } from 'react';
-import { HelioviewerEventTree } from '@helioviewer/event-tree';
+import HelioviewerEventTree from '@helioviewer/event-tree';
 
 function App() {
   const [selectedEvents, setSelectedEvents] = useState([]);
@@ -47,7 +47,7 @@ function App() {
 
 ```jsx
 import React, { useState } from 'react';
-import { HelioviewerEventTree } from '@helioviewer/event-tree';
+import HelioviewerEventTree from '@helioviewer/event-tree';
 
 function AdvancedExample() {
   const [selectedEvents, setSelectedEvents] = useState([]);

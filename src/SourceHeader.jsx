@@ -5,7 +5,6 @@ import {
   CaretRight,
   HideEmptyResourcesIcon,
   ShowMarkersIcon,
-  ShowMarkersIcon2,
   ShowLabelsIcon
 } from "./Icons.jsx";
 
@@ -75,22 +74,26 @@ function SourceHeader({
               style={{ color: showEmptyBranches ? "green" : "red", cursor: "pointer" }}
             />
           </a>
-          <a onClick={() => handleVisibility(!visibility)}>
-            <ShowMarkersIcon
-              data-testid={`event-tree-event-visibility-button-${source}`}
-              width="14"
-              height="14"
-              style={{ color: visibility ? "green" : "red", cursor: "pointer" }}
-            />
-          </a>
-          <a onClick={() => handleLabelVisibility(!labelVisibility)}>
-            <ShowLabelsIcon
-              data-testid={`event-tree-event-label-visibility-button-${source}`}
-              width="14"
-              height="14"
-              style={{ color: labelVisibility ? "green" : "red", cursor: "pointer" }}
-            />
-          </a>
+          {handleVisibility && (
+            <a onClick={() => handleVisibility(!visibility)}>
+              <ShowMarkersIcon
+                data-testid={`event-tree-event-visibility-button-${source}`}
+                width="14"
+                height="14"
+                style={{ color: visibility ? "green" : "red", cursor: "pointer" }}
+              />
+            </a>
+          )}
+          {handleLabelVisibility && (
+            <a onClick={() => handleLabelVisibility(!labelVisibility)}>
+              <ShowLabelsIcon
+                data-testid={`event-tree-event-label-visibility-button-${source}`}
+                width="14"
+                height="14"
+                style={{ color: labelVisibility ? "green" : "red", cursor: "pointer" }}
+              />
+            </a>
+          )}
         </div>
       </div>
     </>
