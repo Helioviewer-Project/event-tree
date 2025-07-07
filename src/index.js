@@ -1,2 +1,2 @@
 import HelioviewerEventTree from "./HelioviewerEventTree";
-export {HelioviewerEventTree}
+export default HelioviewerEventTree;
