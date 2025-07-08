@@ -8,6 +8,10 @@ A React component for displaying and managing hierarchical solar event data from
 npm install @helioviewer/event-tree
 ```
 
+## Quick Start
+
+For a complete working example, see the [React example project](./examples/react/) which demonstrates how to integrate the component into a React application with Vite.
+
 ## Usage
 
 ### Basic Example
@@ -70,7 +74,6 @@ function AdvancedExample() {
       onToggleVisibility={() => setVisibility(!visibility)}
       onToggleLabelVisibility={() => setLabelVisibility(!labelVisibility)}
       forcedSelections={selections}
-      apiURL="https://api.helioviewer.org"
       onLoad={() => console.log('Component loaded')}
       onError={(error) => console.error('Error loading events:', error)}
     />
@@ -145,6 +148,28 @@ The component fetches data from the Helioviewer API using the following endpoint
 {apiURL}?startTime={ISO_DATE}&action=events&sources={SOURCE}
 ```
 
+### API Configuration
+
+You need to configure the API URL for your specific deployment. You can use the public Helioviewer API or your own instance:
+
+**Option 1: Public API (with CORS setup required)**
+- Use `apiURL="https://api.helioviewer.org"`
+- **Important**: Contact the Helioviewer team to whitelist your domain for CORS, otherwise you'll encounter CORS errors
+
+**Option 2: Local/Custom API**
+- Point to your own Helioviewer API instance
+- Example: `apiURL="http://your-api-server.com:8081"`
+
+```jsx
+<HelioviewerEventTree
+  source="HEK"
+  eventsDate={new Date()}
+  onEventsUpdate={handleEventsUpdate}
+  onHoveredEventsUpdate={handleHoveredEventsUpdate}
+  apiURL="https://api.helioviewer.org"  // Configure as needed
+/>
+```
+
 Expected API response structure:
 ```javascript
 [
@@ -190,6 +215,18 @@ This is a React component library. To use in development:
 1. Install dependencies in your project
 2. Import and use the component as shown in examples
 3. Ensure your API endpoint returns data in the expected format
+
+### Running the Example
+
+To run the included React example:
+
+```bash
+cd examples/react
+npm install
+npm run dev
+```
+
+This will start a development server at `http://localhost:5173` with a working implementation of the event tree component.
 
 ## Browser Support
 

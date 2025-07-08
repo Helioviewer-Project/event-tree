@@ -33,7 +33,6 @@ const EventTreeExample = () => {
           eventsDate={new Date('2023-01-01')}
           onEventsUpdate={handleEventsUpdate}
           onHoveredEventsUpdate={handleHoveredEventsUpdate}
-          apiURL="http://ec2-44-219-199-246.compute-1.amazonaws.com:8081"
         />
       </div>
       

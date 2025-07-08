@@ -105,7 +105,6 @@ function App() {
                 eventsDate={selectedDate}
                 onEventsUpdate={(events) => handleEventsUpdate(events, 'HEK')}
                 onHoveredEventsUpdate={handleHoveredEventsUpdate}
-                apiURL="http://ec2-44-219-199-246.compute-1.amazonaws.com:8081"
               />
             </div>
           </div>
@@ -123,7 +122,6 @@ function App() {
                 eventsDate={selectedDate}
                 onEventsUpdate={(events) => handleEventsUpdate(events, 'CCMC')}
                 onHoveredEventsUpdate={handleHoveredEventsUpdate}
-                apiURL="http://ec2-44-219-199-246.compute-1.amazonaws.com:8081"
               />
             </div>
           </div>
@@ -141,7 +139,6 @@ function App() {
                 eventsDate={selectedDate}
                 onEventsUpdate={(events) => handleEventsUpdate(events, 'RHESSI')}
                 onHoveredEventsUpdate={handleHoveredEventsUpdate}
-                apiURL="http://ec2-44-219-199-246.compute-1.amazonaws.com:8081"
               />
             </div>
           </div>
