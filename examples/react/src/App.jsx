@@ -43,7 +43,7 @@ function App() {
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '10px' }}>
           <img 
-            src="/helioviewer-logo.png" 
+            src="helioviewer-logo.png" 
             alt="Helioviewer Project" 
             style={{ width: '60px', height: '60px' }}
           />
