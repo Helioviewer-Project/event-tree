@@ -42,11 +42,85 @@ function App() {
     <>
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <h1>Helioviewer Event Tree</h1>
-        <p style={{ fontSize: '18px', color: '#666', maxWidth: '800px', margin: '0 auto 30px' }}>
+        <p style={{ fontSize: '18px', color: '#666', maxWidth: '800px', margin: '0 auto 20px' }}>
           A React component for displaying and managing hierarchical solar event data from various sources. 
           This interactive tree interface allows you to browse, select, and manage events with features like 
           hierarchical selection, expand/collapse functionality, and persistent state management.
         </p>
+        
+        <div style={{ 
+          display: 'flex', 
+          gap: '20px', 
+          marginBottom: '20px',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <a 
+            href="https://github.com/Helioviewer-Project/event-tree" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              textDecoration: 'none',
+              color: '#333',
+              padding: '8px 16px',
+              border: '1px solid #ddd',
+              borderRadius: '6px',
+              backgroundColor: '#f8f9fa',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#e9ecef';
+              e.target.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#f8f9fa';
+              e.target.style.transform = 'translateY(0)';
+            }}
+          >
+            <img 
+              src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" 
+              alt="GitHub" 
+              style={{ width: '24px', height: '24px' }}
+            />
+            <span style={{ fontWeight: '500' }}>GitHub Repository</span>
+          </a>
+          
+          <a 
+            href="https://www.npmjs.com/package/@helioviewer/event-tree" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              textDecoration: 'none',
+              color: '#333',
+              padding: '8px 16px',
+              border: '1px solid #ddd',
+              borderRadius: '6px',
+              backgroundColor: '#f8f9fa',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#e9ecef';
+              e.target.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#f8f9fa';
+              e.target.style.transform = 'translateY(0)';
+            }}
+          >
+            <img 
+              src="https://static-production.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png" 
+              alt="npm" 
+              style={{ width: '24px', height: '24px' }}
+            />
+            <span style={{ fontWeight: '500' }}>NPM Package</span>
+          </a>
+        </div>
         
         <div style={{ marginTop: '20px', marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
           <label style={{ fontSize: '16px', fontWeight: 'bold' }}>

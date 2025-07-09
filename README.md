@@ -10,7 +10,7 @@ npm install @helioviewer/event-tree
 
 ## Quick Start
 
-For a complete working example, see the [demo page](https://helioviewer-project.github.io/event-tree/) which demonstrates how to integrate the component into a React application with Vite.
+For a complete working example, see the [React example project](https://github.com/Helioviewer-Project/event-tree/tree/main/examples/react) which demonstrates how to integrate the component into a React application with Vite. The main implementation is in [App.jsx](https://github.com/Helioviewer-Project/event-tree/blob/main/examples/react/src/App.jsx).
 
 ## Usage
 

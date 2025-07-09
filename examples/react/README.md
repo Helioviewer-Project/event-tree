@@ -42,7 +42,7 @@ This will start the Vite development server, typically on `http://localhost:5173
 
 This example includes:
 
-- **EventTreeExample.jsx** - A complete implementation showing how to use the HelioviewerEventTree component
+- **App.jsx** - A complete implementation showing how to use the HelioviewerEventTree component with multiple sources
 - **Vite configuration** - Modern build tooling with fast refresh
 - **ESLint setup** - Code quality and formatting rules
 
