@@ -41,7 +41,14 @@ function App() {
   return (
     <>
       <div style={{ textAlign: 'center', padding: '20px' }}>
-        <h1>Helioviewer Event Tree</h1>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '10px' }}>
+          <img 
+            src="/helioviewer-logo.png" 
+            alt="Helioviewer Project" 
+            style={{ width: '60px', height: '60px' }}
+          />
+          <h1 style={{ margin: 0, fontSize: '2.5rem', fontWeight: 'bold' }}>Helioviewer Event Tree</h1>
+        </div>
         <p style={{ fontSize: '18px', color: '#666', maxWidth: '800px', margin: '0 auto 20px' }}>
           A React component for displaying and managing hierarchical solar event data from various sources. 
           This interactive tree interface allows you to browse, select, and manage events with features like 
