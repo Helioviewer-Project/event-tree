@@ -21,6 +21,53 @@ const EventTreeExample = () => {
       <p>This component displays solar events in a hierarchical tree structure.</p>
       
       <div style={{ 
+        display: 'flex', 
+        gap: '20px', 
+        marginBottom: '20px',
+        alignItems: 'center'
+      }}>
+        <a 
+          href="https://github.com/Helioviewer-Project/event-tree" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px', 
+            textDecoration: 'none',
+            color: '#333'
+          }}
+        >
+          <img 
+            src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" 
+            alt="GitHub" 
+            style={{ width: '24px', height: '24px' }}
+          />
+          <span>GitHub Repository</span>
+        </a>
+        
+        <a 
+          href="https://www.npmjs.com/package/@helioviewer/event-tree" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px', 
+            textDecoration: 'none',
+            color: '#333'
+          }}
+        >
+          <img 
+            src="https://static-production.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png" 
+            alt="npm" 
+            style={{ width: '24px', height: '24px' }}
+          />
+          <span>NPM Package</span>
+        </a>
+      </div>
+      
+      <div style={{ 
         border: '1px solid #ccc', 
         borderRadius: '4px', 
         padding: '10px', 
