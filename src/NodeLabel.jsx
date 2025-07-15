@@ -4,15 +4,35 @@ import Checkbox from "./Checkbox.jsx";
 import { EnabledTriangle, DisabledTriangle } from "./Icons.jsx";
 
 /*
- * Uses a regex to find proper JavaScript Unicode escape sequences like \u03b1 (note the backslash)
- * Captures the 4-digit hex code in a group and converts it to an actual Unicode character
+ * TEMPORARY HACK: Fixes title display issues before fixing the problem at the source
+ * 
+ * This function handles malformed title strings by:
+ * 1. Unicode escape sequences like \u03b1 (with backslash)
+ * 2. Unicode sequences like u03b2 (without backslash)
+ * 3. Replace newline escape sequences \n with space
+ * 4. HTML entities like &deg; &amp; &lt; &gt; &quot; &#39;
+ * 
  * Can handle any Unicode character in the Basic Multilingual Plane (U+0000 to U+FFFF)
- * Properly checks for the backslash prefix
  */
-const fixTitle = (title) => {
-  return title.replace(/\\u([\da-fA-F]{4})/g, function (m, $1) {
-    return String.fromCharCode(parseInt($1, 16));
-  });
+export const fixTitle = (title) => {
+  return title
+    // Handle Unicode escape sequences with backslash
+    .replace(/\\u([\da-fA-F]{4})/g, function (m, $1) {
+      return String.fromCharCode(parseInt($1, 16));
+    })
+    // Handle Unicode sequences without backslash (u followed by 4 hex digits)
+    .replace(/u([\da-fA-F]{4})/g, function (m, $1) {
+      return String.fromCharCode(parseInt($1, 16));
+    })
+    // Replace newline escape sequences with space
+    .replace(/\\n/g, ' ')
+    // Handle common HTML entities
+    .replace(/&deg;/g, '°')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
 };
 
 export default function NodeLabel({ onLabelHover, offLabelHover, onLabelClick, label, dataTestId }) {
