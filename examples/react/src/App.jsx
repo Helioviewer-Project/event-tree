@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import HelioviewerEventTree from '@helioviewer/event-tree'
+import { fixTitle } from '@helioviewer/event-tree/src/NodeLabel.jsx'
 
 function App() {
   const [selectedEvents, setSelectedEvents] = useState([]);
@@ -265,7 +266,7 @@ function App() {
                           {event.source}
                         </span>
                         <strong style={{ fontSize: '16px', color: '#333' }}>
-                          {event.event_data?.short_label || event.event_data?.label || event.label || 'Unknown Event'}
+                          {fixTitle(event.event_data?.short_label || event.event_data?.label || event.label || 'Unknown Event')}
                         </strong>
                       </div>
                       <button 
