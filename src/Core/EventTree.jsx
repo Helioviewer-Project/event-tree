@@ -63,7 +63,7 @@ class EventTree {
           let eventNode = {
             label: e.short_label ?? e.label,
             path: `${root.path}>>${e.short_label ?? e.label}`,
-            id: `${root.path}>>${e.short_label ?? e.label}`,
+            id: `${root.path}>>${e.id}`,
             state: "unchecked",
             expand: level == 0,
             data: e
@@ -294,6 +294,44 @@ class EventTree {
 
   isFirstLevel(id) {
     return this.getLevel(id) == 2;
+  }
+
+  adjustSelectionsWithPath(selections) {
+
+    const adjustedSelections = [];
+
+    selections.forEach((s) => {
+
+      // if it is tree no problem
+      if (this.hasOwnProperty(s)) {
+        adjustedSelections.push(s);
+      } else {
+
+        // if it is not in tree
+        // we are checking if it is in tree by path
+        // if there can multiple ids to match
+        // we will be just adding those into the selections with their ids. 
+
+        // We track if there is a node like exists
+        let matchedWithPath = false;
+
+        for (const id in this) {
+            if(this[id].path == s) {
+                adjustedSelections.push(id);
+                matchedWithPath = true;
+            }
+        }
+
+        // if this selection is not pathed one and still not in tree
+        // We still keep it since selections doesn't have to be in the tree always
+        // but when they are in tree , they will be used to mark nodes, 
+        if(!matchedWithPath) {
+            adjustedSelections.push(s);
+        }
+      }
+    });
+
+    return adjustedSelections;
   }
 }
 
