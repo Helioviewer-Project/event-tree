@@ -55,14 +55,19 @@ function HelioviewerEventTree({
 
       try {
         const api = new API(apiURL);
-        const apiEvents = await api.getEvents(eventsDate, source, { signal });
-        const eventTree = EventTree.make(apiEvents, source);
-        const selectedTree = eventTree.applySelections(selections);
 
-        Cache.make(source).saveSelections(selections);
+        const apiEvents = await api.getEvents(eventsDate, source, { signal });
+
+        const eventTree = EventTree.make(apiEvents, source);
+
+        const adjustedSelections = eventTree.adjustSelectionsWithPath(selections);
+
+        const selectedTree = eventTree.applySelections(adjustedSelections);
+
+        Cache.make(source).saveSelections(adjustedSelections);
 
         if (onSelectionsUpdate != null) {
-          onSelectionsUpdate(selections, selectedTree.selectedEvents());
+          onSelectionsUpdate(adjustedSelections, selectedTree.selectedEvents());
         }
 
         onEventsUpdate(selectedTree.selectedEvents());
