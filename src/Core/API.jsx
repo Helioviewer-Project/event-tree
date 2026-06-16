@@ -26,7 +26,7 @@ export default class API {
     const startTime = date.toISOString();
 
     // Construct the URL with query parameters
-    const url = `${this.apiurl}?startTime=${encodeURIComponent(startTime)}&action=events&sources=${encodeURIComponent(
+    const url = `${this.apiurl}?startTime=${encodeURIComponent(startTime)}&action=events&format=flat&sources=${encodeURIComponent(
       source
     )}`;
 

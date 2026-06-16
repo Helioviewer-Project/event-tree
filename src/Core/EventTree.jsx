@@ -10,101 +10,73 @@ class EventTree {
   }
 
   /**
-   * @param {Object} events Event Data object
-   * @param {string} source Top level event group (HEK, CCMC, RHESSI, etc)
+   * Build the tree directly from a flat list of events.
+   * Each event's `path` (e.g. "HEK>>Active Region>>HMI SHARP") describes its
+   * place in the hierarchy. Group nodes are created on demand from path
+   * segments; events that share a path collapse under one group with each
+   * event as a sibling leaf.
+   *
+   * @param {Array}  events Flat array of event objects from the API.
+   * @param {string} source Top level event group name (HEK, CCMC, RHESSI, ...).
    */
   static make(events, source) {
-    /**
-     * Given a set of events like:
-     *   - top level
-     *      - groups: second level
-     *          - groups: third level
-     *              - data: [event 1, event 2, event 3]
-     *  This will return a structure like:
-     *  [{top level}, {second level}, {third level}, {event 1}, {event 2}, {event 3}].
-     *  Each object in the list will have references to their children and an ID for their parent.
-     */
-    const makeFlatTreeInner = (eventData, parentPath, level = 0) => {
-      if (eventData.hasOwnProperty("groups")) {
-        const root = {
-          label: eventData.name,
-          path: `${parentPath}>>${eventData.name}`,
-          id: `${parentPath}>>${eventData.name}`,
-          state: "unchecked",
-          expand: level == 0,
-          children: []
-        };
-
-        const childs = [];
-
-        eventData.groups.forEach((ed) => {
-          let innerFlatTree = makeFlatTreeInner(ed, root.path, level + 1);
-          root.children.push(innerFlatTree[0].id);
-          innerFlatTree[0].parent_id = root.id;
-          childs.push(...innerFlatTree);
-        });
-
-        return [root, ...childs];
+    const dict = {
+      [source]: {
+        label: source,
+        path: source,
+        id: source,
+        state: "unchecked",
+        parent_id: null,
+        expand: true,
+        children: []
       }
+    };
 
-      if (eventData.hasOwnProperty("data")) {
-        const root = {
-          label: eventData.name,
-          path: `${parentPath}>>${eventData.name}`,
-          id: `${parentPath}>>${eventData.name}`,
-          state: "unchecked",
-          expand: level == 0,
-          children: []
-        };
+    events.forEach((e) => {
+      const parts = e.path.split(">>");
 
-        const childs = [];
+      let parentId = null;
+      let cumulativePath = "";
 
-        eventData.data.forEach((e) => {
-          let eventNode = {
-            label: e.short_label ?? e.label,
-            path: `${root.path}>>${e.short_label ?? e.label}`,
-            id: `${root.path}>>${e.id}`,
+      parts.forEach((segment, idx) => {
+        cumulativePath = idx === 0 ? segment : `${cumulativePath}>>${segment}`;
+
+        if (!dict.hasOwnProperty(cumulativePath)) {
+          dict[cumulativePath] = {
+            label: segment,
+            path: cumulativePath,
+            id: cumulativePath,
             state: "unchecked",
-            expand: level == 0,
-            data: e
+            parent_id: parentId,
+            expand: idx < 2,
+            children: []
           };
 
-          root.children.push(eventNode.id);
-          eventNode.parent_id = root.id;
+          if (parentId != null) {
+            dict[parentId].children.push(cumulativePath);
+          }
+        }
 
-          childs.push(eventNode);
-        });
+        parentId = cumulativePath;
+      });
 
-        return [root, ...childs];
-      }
-    };
+      const eventLabel = e.short_label ?? e.label;
+      const eventId = `${parentId}>>${e.id}`;
 
-    const root = {
-      label: source,
-      path: source,
-      id: source,
-      state: "unchecked",
-      parent_id: null,
-      expand: true,
-      children: []
-    };
+      dict[eventId] = {
+        label: eventLabel,
+        path: `${parentId}>>${eventLabel}`,
+        id: eventId,
+        state: "unchecked",
+        parent_id: parentId,
+        expand: false,
+        data: e
+      };
 
-    const childs = [];
-
-    events.forEach((ed) => {
-      let innerFlatTree = makeFlatTreeInner(ed, source);
-      root.children.push(innerFlatTree[0].id);
-      innerFlatTree[0].parent_id = root.id;
-      childs.push(...innerFlatTree);
+      dict[parentId].children.push(eventId);
     });
 
-    const res = {};
-
-    [root, ...childs].forEach((e) => {
-      res[e.id] = e;
-    });
-
-    return new EventTree(res);
+    return new EventTree(dict);
   }
 
   toggleCheckbox(id) {
