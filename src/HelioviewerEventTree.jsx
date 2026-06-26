@@ -165,6 +165,7 @@ function HelioviewerEventTree({
   };
 
   let hasEvents = eventTree.getEventCount(source) > 0;
+  let hasCategories = eventTree[source].children.length > 0;
 
   if (!hasEvents) {
     nodeContainerStyle = {
@@ -186,7 +187,7 @@ function HelioviewerEventTree({
 
   let eventTreeRender = <span style={{ color: "red" }}>No events</span>;
 
-  if (hasEvents) {
+  if (hasCategories) {
     eventTreeRender = eventTree[source].children.map((cid) => {
       return (
         <Node
@@ -208,6 +209,7 @@ function HelioviewerEventTree({
       <div style={nodeContainerStyle}>
         <SourceHeader
           hasEvents={hasEvents}
+          hasCategories={hasCategories}
           checked={eventTree[source].state}
           onCheckedUpdate={() => toggleCheckbox(source)}
           onHeaderHover={() => {
