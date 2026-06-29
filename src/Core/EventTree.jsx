@@ -10,17 +10,18 @@ class EventTree {
   }
 
   /**
-   * Build the tree directly from a flat list of events.
-   * Each event's `path` (e.g. "HEK>>Active Region>>HMI SHARP") describes its
-   * place in the hierarchy. Group nodes are created on demand from path
-   * segments; events that share a path collapse under one group with each
-   * event as a sibling leaf.
+   * Build the tree from the `format=simpletree` response: a flattree keyed by
+   * 2-piece category paths ("HEK>>Active Region") whose values are arrays of
+   * events. Empty categories arrive as `[]` so they remain visible in the
+   * tree. Each event carries its own `path` (e.g. "HEK>>Active Region>>HMI
+   * SHARP") describing the deeper hierarchy; group nodes for those deeper
+   * segments are created on demand and reused across events.
    *
-   * @param {Array}  events Flat array of event objects from the API.
-   * @param {string} source Top level event group name (HEK, CCMC, RHESSI, ...).
+   * @param {Object} eventsByCategory Dict {categoryPath: [event, ...]}.
+   * @param {string} source           Top level event group name (HEK, CCMC, ...).
    */
-  static make(events, source) {
-    const dict = {
+  static make(eventsByCategory, source) {
+    const flattree = {
       [source]: {
         label: source,
         path: source,
@@ -32,51 +33,73 @@ class EventTree {
       }
     };
 
-    events.forEach((e) => {
-      const parts = e.path.split(">>");
-
-      let parentId = null;
-      let cumulativePath = "";
-
-      parts.forEach((segment, idx) => {
-        cumulativePath = idx === 0 ? segment : `${cumulativePath}>>${segment}`;
-
-        if (!dict.hasOwnProperty(cumulativePath)) {
-          dict[cumulativePath] = {
-            label: segment,
-            path: cumulativePath,
-            id: cumulativePath,
-            state: "unchecked",
-            parent_id: parentId,
-            expand: idx < 2,
-            children: []
-          };
-
-          if (parentId != null) {
-            dict[parentId].children.push(cumulativePath);
-          }
-        }
-
-        parentId = cumulativePath;
-      });
-
-      const eventLabel = e.short_label ?? e.label;
-      const eventId = `${parentId}>>${e.id}`;
-
-      dict[eventId] = {
-        label: eventLabel,
-        path: `${parentId}>>${eventLabel}`,
-        id: eventId,
-        state: "unchecked",
-        parent_id: parentId,
-        expand: false,
-        data: e
-      };
-
-      dict[parentId].children.push(eventId);
+    // Seed every category branch the server reports, even when its list is
+    // empty, so the user always sees the full catalogue.
+    Object.keys(eventsByCategory).forEach((categoryPath) => { 
+      if (!flattree.hasOwnProperty(categoryPath)) {
+        const segments = categoryPath.split(">>");
+        flattree[categoryPath] = {
+          label: segments[segments.length - 1],
+          path: categoryPath,
+          id: categoryPath,
+          state: "unchecked",
+          parent_id: source,
+          expand: true,
+          children: []
+        };
+        flattree[source].children.push(categoryPath);
+      }
     });
 
-    return new EventTree(dict);
+    // Fold each event in using its own `path` field. Walks the cumulative
+    // segments, creating any missing group nodes, then appends the event leaf.
+    Object.values(eventsByCategory).forEach((eventList) => {
+      eventList.forEach((e) => {
+        const parts = e.path.split(">>");
+
+        let parentId = null;
+        let cumulativePath = "";
+
+        parts.forEach((segment, idx) => {
+          cumulativePath = idx === 0 ? segment : `${cumulativePath}>>${segment}`;
+
+          if (!flattree.hasOwnProperty(cumulativePath)) {
+            flattree[cumulativePath] = {
+              label: segment,
+              path: cumulativePath,
+              id: cumulativePath,
+              state: "unchecked",
+              parent_id: parentId,
+              expand: idx < 2,
+              children: []
+            };
+
+            if (parentId != null) {
+              flattree[parentId].children.push(cumulativePath);
+            }
+          }
+
+          parentId = cumulativePath;
+        });
+
+        const eventLabel = e.short_label ?? e.label;
+        const eventId = `${parentId}>>${e.id}`;
+
+        flattree[eventId] = {
+          label: eventLabel,
+          path: `${parentId}>>${eventLabel}`,
+          id: eventId,
+          state: "unchecked",
+          parent_id: parentId,
+          expand: false,
+          data: e
+        };
+
+        flattree[parentId].children.push(eventId);
+      });
+    });
+
+    return new EventTree(flattree);
   }
 
   toggleCheckbox(id) {

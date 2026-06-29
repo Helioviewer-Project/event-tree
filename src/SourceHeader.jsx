@@ -13,6 +13,7 @@ import Checkbox from "./Checkbox.jsx";
 function SourceHeader({
   source,
   hasEvents,
+  hasCategories,
   eventsDate,
   checked,
   onCheckedUpdate,
@@ -49,7 +50,7 @@ function SourceHeader({
           <span onMouseEnter={onHeaderHover} onMouseLeave={offHeaderHover} data-testid={`event-tree-label-${source}`}>
             {source}
           </span>
-          {hasEvents ? (
+          {hasCategories ? (
             <Checkbox
               dataTestId={`event-tree-checkbox-${source}`}
               state={checked}
