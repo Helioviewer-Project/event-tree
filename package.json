@@ -1,6 +1,6 @@
 {
   "name": "@helioviewer/event-tree",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A react component for grouping and listing and selecting solar events.",
   "main": "src/index.js",
   "scripts": {
@@ -14,6 +14,7 @@
     "NASA",
     "HEK",
     "CCMC",
+    "RHESSI",
     "solar",
     "astro",
     "events",
