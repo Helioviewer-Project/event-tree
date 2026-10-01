@@ -209,9 +209,9 @@ function App() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', flex: '1' }}>
-            <div style={{ 
-              border: '1px solid #ccc', 
-              borderRadius: '4px', 
+            <div style={{
+              border: '1px solid #ccc',
+              borderRadius: '4px',
               padding: '10px',
               flex: '1',
               overflow: 'auto'
@@ -220,6 +220,23 @@ function App() {
                 source="RHESSI"
                 eventsDate={selectedDate}
                 onEventsUpdate={(events) => handleEventsUpdate(events, 'RHESSI')}
+                onHoveredEventsUpdate={handleHoveredEventsUpdate}
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', flex: '1' }}>
+            <div style={{
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              padding: '10px',
+              flex: '1',
+              overflow: 'auto'
+            }}>
+              <HelioviewerEventTree
+                source="WSA"
+                eventsDate={selectedDate}
+                onEventsUpdate={(events) => handleEventsUpdate(events, 'WSA')}
                 onHoveredEventsUpdate={handleHoveredEventsUpdate}
               />
             </div>
@@ -257,7 +274,7 @@ function App() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <span style={{ 
                           padding: '4px 8px', 
-                          backgroundColor: event.source === 'HEK' ? '#1976d2' : event.source === 'CCMC' ? '#388e3c' : '#f57c00',
+                          backgroundColor: event.source === 'HEK' ? '#1976d2' : event.source === 'CCMC' ? '#388e3c' : event.source === 'WSA' ? '#7b1fa2' : '#f57c00',
                           borderRadius: '12px',
                           fontSize: '12px',
                           fontWeight: 'bold',
