@@ -8,7 +8,7 @@ export default class Cache {
 
   /**
    * Create a new Cache instance.
-   * @param {string} source - The source for the cache | HEK, CCMC, RHESSI.
+   * @param {string} source - The source for the cache | HEK, CCMC, RHESSI, WSA, etc.
    */
   constructor(source) {
     this.selectionsKey = `helioviewer.events.selections.${source}`;
@@ -17,7 +17,7 @@ export default class Cache {
 
   /**
    * Create a new Cache instance.
-   * @param {string} source - The source for the cache| HEK, CCMC, RHESSI..
+   * @param {string} source - The source for the cache | HEK, CCMC, RHESSI, WSA, etc.
    * @returns {Cache} - A new Cache instance.
    */
   static make(source) {

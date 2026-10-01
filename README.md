@@ -85,7 +85,7 @@ function AdvancedExample() {
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| `source` | `string` | ✓ | - | Event source identifier (e.g., "HEK", "CCMC", "RHESSI") |
+| `source` | `string` | ✓ | - | Event source identifier (e.g., "HEK", "CCMC", "RHESSI", "WSA") |
 | `eventsDate` | `Date` | ✓ | - | Date for which to fetch events |
 | `onEventsUpdate` | `function` | ✓ | - | Callback when selected events change `(events) => void` |
 | `onHoveredEventsUpdate` | `function` | ✓ | - | Callback when hovered events change `(eventIds) => void` |
