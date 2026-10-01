@@ -6,7 +6,12 @@ import { fixTitle } from '@helioviewer/event-tree/src/NodeLabel.jsx'
 function App() {
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [expandedEvents, setExpandedEvents] = useState({});
-  const [selectedDate, setSelectedDate] = useState(new Date('2023-01-01T12:00:00Z'));
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() - 1);
+    d.setUTCHours(14, 0, 0, 0);
+    return d;
+  });
   const [hoveredEventIds, setHoveredEventIds] = useState([]);
 
   const handleEventsUpdate = (events, source) => {
